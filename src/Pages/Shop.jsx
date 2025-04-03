@@ -7,6 +7,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaRegTimesCircle } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import ProductNotFound from "../Components/UI/ProductNotFound.jsx";
+import { use } from "react";
 const Shop = () => {
   const [show, setShow] = useState(false);
   const [products, setProducts] = useState([]);
@@ -17,13 +18,15 @@ const Shop = () => {
   const All = useLoaderData();
   const InputRef= useRef(null);
 
+   
   const SearchProducts = () => {
-    setSearch(search.toLowerCase());
+    const searchTerm =search.toLowerCase();
+    console.log(search);
      let SearchProducts = All.filter((product) => {
-      let titleArray = product.title.split(" ");
-      titleArray = titleArray.map((word) => word.toLowerCase());
+      let titleArray = product.title.toLowerCase().split(" ");
+    
 
-      return titleArray.includes(search);
+      return titleArray.some((word) => word.includes(searchTerm));
     });
     
       if(SearchProducts.length>0){setProducts(SearchProducts);}
